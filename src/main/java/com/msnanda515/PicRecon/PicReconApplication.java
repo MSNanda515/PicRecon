@@ -21,11 +21,11 @@ public class PicReconApplication  {
 //		return "Hello World";
 //	}
 
-	@Bean
-	CommandLineRunner runner(ImageRepo repo) {
-		return args -> {
-			Image im = new Image(1);
-			repo.insert(im);
-		};
-	}
+//	@Bean
+//	CommandLineRunner runner(ImageRepo repo) {
+//		return args -> {
+//			Image im = new Image(1);
+//			repo.insert(im);
+//		};
+//	}
 }
