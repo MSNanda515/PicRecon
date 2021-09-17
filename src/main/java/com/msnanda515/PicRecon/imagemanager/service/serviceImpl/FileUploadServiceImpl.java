@@ -1,6 +1,10 @@
 package com.msnanda515.PicRecon.imagemanager.service.serviceImpl;
 
+import com.msnanda515.PicRecon.imagemanager.Constants;
+import com.msnanda515.PicRecon.imagemanager.model.Image;
+import com.msnanda515.PicRecon.imagemanager.repo.ImageRepo;
 import com.msnanda515.PicRecon.imagemanager.service.FileUploadService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,15 +15,23 @@ import java.nio.file.Paths;
 
 @Service
 public class FileUploadServiceImpl implements FileUploadService {
-    private String uploadFolderPath = "/Users/mehar/Downloads/PicRecon/";
+    private String uploadFolderPath = Constants.localPath;
+
+    private ImageRepo imageRepo;
+
+    @Autowired
+    FileUploadServiceImpl(ImageRepo imageRepo) {
+        this.imageRepo = imageRepo;
+    }
 
     /**
      * Uploads file to local file system. Ideally should be replaced by remote service
      * @param file
      */
+
     @Override
-    public void uploadToLocal(MultipartFile file) {
-//        System.out.println("Uploading file to local db");
+    public void uploadToLocal(MultipartFile file, Long ownerId) {
+        // Save the object to the server
         try {
             // Convert the file to bytes
             byte[] data = file.getBytes();

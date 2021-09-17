@@ -1,6 +1,7 @@
 package com.msnanda515.PicRecon.imagemanager.controller;
 
 import com.msnanda515.PicRecon.imagemanager.service.FileUploadService;
+import com.msnanda515.PicRecon.imagemanager.service.ImageUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +14,24 @@ import java.util.zip.ZipException;
 
 @RestController
 @RequestMapping("api/v1")
-public class FileUploadController {
+public class ImageController {
+
+    private ImageUploadService imageUploadService;
+
+    @Autowired
+    ImageController(ImageUploadService imageUploadService) {
+        this.imageUploadService = imageUploadService;
+    }
+
     @Autowired
     private FileUploadService fileUploadService;
 
     @PostMapping("/upload/local")
-    public void uploadLocal(@RequestParam("file")MultipartFile multipartFile) throws IOException, ZipException {
-        fileUploadService.uploadToLocal(multipartFile);
+    public void uploadLocal(@RequestParam("file")MultipartFile multipartFile,
+                            @RequestParam("ownerId") Long ownerId) throws IOException, ZipException {
+        // Call the service to upload file
+//        fileUploadService.uploadToLocal(multipartFile, ownerId);
+        imageUploadService.uploadImage(multipartFile, ownerId);
+
     }
 }
