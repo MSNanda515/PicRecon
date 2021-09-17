@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.GeneratedValue;
+import java.util.Optional;
 import java.util.Random;
 
 public class Image {
@@ -30,4 +31,5 @@ public class Image {
                 "Image[id=%s, Owner='%s']",
                 id, ownerId);
     }
+
 }
