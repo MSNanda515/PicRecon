@@ -4,7 +4,7 @@
 
 ## Insights
 The image can be stored in a bucket, url encoded with the image id, if I decide to use a sql based database
-
+Use Lob annotation to store image in the database itself
 
 ## MVP
 - User should be able to access the images uploaded

@@ -30,7 +30,7 @@ public class FileUploadServiceImpl implements FileUploadService {
      */
 
     @Override
-    public void uploadToLocal(MultipartFile file, Long ownerId) {
+    public void uploadToLocal(MultipartFile file, String ownerId) {
         // Save the object to the server
         try {
             // Convert the file to bytes

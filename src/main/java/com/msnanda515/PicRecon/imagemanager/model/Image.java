@@ -1,22 +1,24 @@
 package com.msnanda515.PicRecon.imagemanager.model;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.Id;
 
+import javax.persistence.GeneratedValue;
 import java.util.Random;
 
 public class Image {
     @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name="uuid", strategy = "uuid2")
+    private String id;
 
-    private long id;
-
-    private long ownerId;
+    private String ownerId;
     private String imageLoc;
     public Image() {}
 
-    public Image(long ownerId, String imageLoc) {
+    public Image(String ownerId, String imageLoc) {
         // Todo Generate a sequence of long (range is hardcoded)
         Random rand = new Random();
-        id = rand.nextInt(100);
         this.ownerId = ownerId;
         this.imageLoc = imageLoc;
     }

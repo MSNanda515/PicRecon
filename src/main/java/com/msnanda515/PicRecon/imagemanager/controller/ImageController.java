@@ -3,10 +3,7 @@ package com.msnanda515.PicRecon.imagemanager.controller;
 import com.msnanda515.PicRecon.imagemanager.service.FileUploadService;
 import com.msnanda515.PicRecon.imagemanager.service.ImageUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -28,10 +25,14 @@ public class ImageController {
 
     @PostMapping("/upload/local")
     public void uploadLocal(@RequestParam("file")MultipartFile multipartFile,
-                            @RequestParam("ownerId") Long ownerId) throws IOException, ZipException {
+                            @RequestParam("ownerId") String ownerId) throws IOException, ZipException {
         // Call the service to upload file
-//        fileUploadService.uploadToLocal(multipartFile, ownerId);
         imageUploadService.uploadImage(multipartFile, ownerId);
+    }
+
+    @DeleteMapping("/delete/local")
+    public void deleteLocal(@RequestParam("imageId") Long imageId, @RequestParam("ownerId") Long ownerId) {
+        // Delete the image from the database if the image belongs to the owner
 
     }
 }
