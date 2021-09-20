@@ -20,16 +20,18 @@ public class ImageDeleteService {
         this.imageRepo = imageRepo;
     }
 
-    public void deleteImage(String imageId, String ownerId) {
-//        Optional<Student> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
-//        if (studentOptional.isPresent()) {
-//            throw new IllegalStateException("Email Taken");
-//        }
-//        studentRepository.save(student);
+    public void deleteImage(String imageId, String userId) {
         // Get the image details from the db
-//        Optional<Image> imOptional = imageRepo.find
-        // Check if user has permission to delete
-
+        imageRepo.deleteImageById(imageId);
+        // Should be working but isn't
+//        Optional<Image> imageOptional = imageRepo.findImageById(imageId);
+//        imageOptional.ifPresent(im -> {
+//            // Check if user has permission to delete
+//            if (im.getOwnerId() == userId) {
+//                // Delete the post
+//                System.out.println("Image Deleted");
+//            }
+//        });
         // Delete the file
     }
 }

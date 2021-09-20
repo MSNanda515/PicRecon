@@ -12,4 +12,6 @@ import java.util.Optional;
 public interface ImageRepo extends MongoRepository<Image, Long> {
     // creates the query that finds the images by ID
     Optional<Image> findImageById(String id);
+    void deleteImageById(String id);
+    void deleteImageByOwnerId(String ownerId);
 }

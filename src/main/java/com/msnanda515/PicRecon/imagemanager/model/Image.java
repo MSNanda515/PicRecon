@@ -32,4 +32,23 @@ public class Image {
                 id, ownerId);
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public String getImageLoc() {
+        return imageLoc;
+    }
+
+    public void setImageLoc(String imageLoc) {
+        this.imageLoc = imageLoc;
+    }
 }
