@@ -22,17 +22,13 @@ public class ImageDeleteService {
 
     public void deleteImage(String imageId, String userId) {
         // Get the image details from the db
-        imageRepo.deleteImageById(imageId);
         // Should be working but isn't
-        // TODO: Should verify if the image exists in the database before deleting
-//        Optional<Image> imageOptional = imageRepo.findImageById(imageId);
-//        imageOptional.ifPresent(im -> {
-//            // Check if user has permission to delete
-//            if (im.getOwnerId() == userId) {
-//                // Delete the post
-//                System.out.println("Image Deleted");
-//            }
-//        });
-        // Delete the file
+        Optional<Image> imageOptional = imageRepo.findImageById(imageId);
+        if (imageOptional.isPresent()) {
+            Image image = imageOptional.get();
+            if (image.getOwnerId().equals(userId)) {
+                imageRepo.deleteImageById(imageId);
+            }
+        }
     }
 }
