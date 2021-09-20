@@ -18,11 +18,12 @@ public class ImageReadService {
 
     public Image readImage(String imageId, String ownerId) {
         // Get the image from the database
-        // TODO: Check if user has permission
         Optional<Image> imageOptional = imageRepo.findImageById(imageId);
         if (imageOptional.isPresent()) {
             Image image = imageOptional.get();
-            return image;
+            if (image.getOwnerId().equals(ownerId)) {
+                return image;
+            }
         }
         return new Image();
 
