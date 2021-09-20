@@ -1,7 +1,9 @@
 package com.msnanda515.PicRecon.imagemanager.controller;
 
+import com.msnanda515.PicRecon.imagemanager.model.Image;
 import com.msnanda515.PicRecon.imagemanager.service.FileUploadService;
 import com.msnanda515.PicRecon.imagemanager.service.ImageDeleteService;
+import com.msnanda515.PicRecon.imagemanager.service.ImageReadService;
 import com.msnanda515.PicRecon.imagemanager.service.ImageUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +18,22 @@ public class ImageController {
 
     private ImageUploadService imageUploadService;
     private ImageDeleteService imageDeleteService;
+    private ImageReadService imageReadService;
 
     @Autowired
     ImageController(ImageUploadService imageUploadService,
-                    ImageDeleteService imageDeleteService) {
+                    ImageDeleteService imageDeleteService,
+                    ImageReadService imageReadService) {
         this.imageUploadService = imageUploadService;
         this.imageDeleteService = imageDeleteService;
+        this.imageReadService = imageReadService;
+    }
+
+    @GetMapping("/get/local/image")
+    public Image getImage(@RequestParam("imageId") String imageId,
+                          @RequestParam("ownerId") String ownerId) {
+        // Call the service to read and return the image
+        return imageReadService.readImage(imageId, ownerId);
     }
 
     @PostMapping("/upload/local")

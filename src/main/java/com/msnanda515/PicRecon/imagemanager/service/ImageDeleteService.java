@@ -24,6 +24,7 @@ public class ImageDeleteService {
         // Get the image details from the db
         imageRepo.deleteImageById(imageId);
         // Should be working but isn't
+        // TODO: Should verify if the image exists in the database before deleting
 //        Optional<Image> imageOptional = imageRepo.findImageById(imageId);
 //        imageOptional.ifPresent(im -> {
 //            // Check if user has permission to delete
