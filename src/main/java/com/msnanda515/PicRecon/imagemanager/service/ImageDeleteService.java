@@ -11,13 +11,16 @@ import java.util.Optional;
 @Service
 public class ImageDeleteService {
     private final ImageRepo imageRepo;
+    private FileDeleteService fileDeleteService;
 
     // Todo: Replace with actual URL
     private String localPath = Constants.localPath;
 
     @Autowired
-    ImageDeleteService(ImageRepo imageRepo) {
+    ImageDeleteService(ImageRepo imageRepo,
+                       FileDeleteService fileDeleteService) {
         this.imageRepo = imageRepo;
+        this.fileDeleteService = fileDeleteService;
     }
 
     public void deleteImage(String imageId, String userId) {
@@ -27,7 +30,9 @@ public class ImageDeleteService {
         if (imageOptional.isPresent()) {
             Image image = imageOptional.get();
             if (image.getOwnerId().equals(userId)) {
+                fileDeleteService.deleteFromLocal(image.getImageLoc());
                 imageRepo.deleteImageById(imageId);
+                // Also delete the file locally
             }
         }
     }
