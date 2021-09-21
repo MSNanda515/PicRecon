@@ -42,6 +42,13 @@ public class ImageController {
         return imageReadService.readImagesByOwner(ownerId);
     }
 
+    // TODO: Delete the all endpoint
+    @GetMapping("/get/local/all")
+    public List<Image> getAllImages() {
+        // Call the service to read and return the image
+        return imageReadService.readAllImages();
+    }
+
     @PostMapping("/upload/local")
     public void uploadLocal(@RequestParam("file")MultipartFile multipartFile,
                             @RequestParam("ownerId") String ownerId) throws IOException, ZipException {

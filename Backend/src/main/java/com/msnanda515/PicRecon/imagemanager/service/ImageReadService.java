@@ -36,4 +36,8 @@ public class ImageReadService {
     public List<Image> readImagesByOwner(String ownerId) {
         return imageRepo.findImagesByOwnerId(ownerId);
     }
+
+    public List<Image> readAllImages() {
+        return imageRepo.findAll();
+    }
 }
