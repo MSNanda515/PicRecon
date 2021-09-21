@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Optional;
+
 /**
  * Updates the file info in mongodb server and puts the image in the local file structure
  */
@@ -28,9 +30,13 @@ public class ImageUploadService {
 
     public void uploadImage(MultipartFile file, String ownerId) {
         // Create an image object and save it to the database
-        Image im = new Image(ownerId, localPath + file.getOriginalFilename());
+        Image im = new Image(ownerId);
+        // Changes the current object with the id
         imageRepo.insert(im);
+        im.setImageLoc(localPath + im.getId());
+        imageRepo.save(im);
         // Save the image to the local file
-        fileUploadService.uploadToLocal(file, ownerId);
+        fileUploadService.uploadToLocal(file, im.getId());
+
     }
 }

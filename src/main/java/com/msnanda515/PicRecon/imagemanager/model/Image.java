@@ -4,8 +4,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.GeneratedValue;
-import java.util.Optional;
-import java.util.Random;
 
 public class Image {
     @Id
@@ -19,11 +17,13 @@ public class Image {
 
     public Image(String ownerId, String imageLoc) {
         // Todo Generate a sequence of long (range is hardcoded)
-        Random rand = new Random();
         this.ownerId = ownerId;
         this.imageLoc = imageLoc;
     }
 
+    public Image(String ownerId) {
+        this.ownerId = ownerId;
+    }
 
     @Override
     public String toString() {

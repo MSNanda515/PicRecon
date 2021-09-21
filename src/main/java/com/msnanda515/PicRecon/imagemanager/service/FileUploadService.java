@@ -26,13 +26,13 @@ public class FileUploadService {
      * Uploads file to local file system. Ideally should be replaced by remote service
      * @param file
      */
-    public void uploadToLocal(MultipartFile file, String ownerId) {
+    public void uploadToLocal(MultipartFile file, String imageId) {
         // Save the object to the server
         try {
             // Convert the file to bytes
             byte[] data = file.getBytes();
             // Get the path to upload folder
-            Path path = Paths.get(uploadFolderPath + file.getOriginalFilename());
+            Path path = Paths.get(uploadFolderPath + imageId);
             // Write the file to the path
             Files.write(path, data);
         } catch (IOException e) {
