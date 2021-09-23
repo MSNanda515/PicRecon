@@ -3,6 +3,7 @@ package com.msnanda515.PicRecon.imagemanager.service;
 import com.msnanda515.PicRecon.imagemanager.Constants;
 import com.msnanda515.PicRecon.imagemanager.model.Image;
 import com.msnanda515.PicRecon.imagemanager.repo.ImageRepo;
+import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,7 +35,8 @@ public class ImageUploadService {
         // Changes the current object with the id
         imageRepo.insert(im);
         // Construct the url for the frontend
-        im.setImageLoc(Constants.serverUrl + Constants.apiEndpoint + "image?imageId=" + im.getId());
+        im.setImageLoc(Constants.localPath + im.getId());
+        im.setImageUrl(Constants.serverUrl + Constants.apiEndpoint + "image?imageId=" + im.getId());
         imageRepo.save(im);
         // Save the image to the local file
         fileUploadService.uploadToLocal(file, im.getId());

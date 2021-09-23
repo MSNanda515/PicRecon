@@ -63,7 +63,7 @@
           </button>
        </div>
        <div class="modal-body">
-          <input type="file" (change)="onFileSelected($event)" />
+          <input type="file" (change)="onFileSelected($event)" accept="image/*"/>
           <button type="button" (click)="uploadImage()" class="btn btn-primary" data-dismiss="modal">Submit</button>
        </div>
     </div>

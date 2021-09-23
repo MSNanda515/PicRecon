@@ -13,6 +13,16 @@ public class Image {
 
     private String ownerId;
     private String imageLoc;
+    private String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public Image() {}
 
     public Image(String ownerId, String imageLoc) {
