@@ -1,4 +1,5 @@
 export interface Image {
   id: string;
-  ownerId: string;  
+  ownerId: string;
+  imageLoc: string;
 }
