@@ -26,6 +26,12 @@ export class ImageService {
       });
   }
 
+  public getImagesOwner() {
+    const fd = new FormData();
+    fd.append('ownerId', "14");
+    return this.http.post(`${this.apiServerUrl}/get/local/owner`, fd)
+  }
+
   public updateImage(image: Image): Observable<Image> {
     return this.http.put<Image>(`${this.apiServerUrl}/Image/update`, Image);
   }
