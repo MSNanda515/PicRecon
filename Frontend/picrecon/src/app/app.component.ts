@@ -35,8 +35,8 @@ export class AppComponent implements OnInit{
     )
   }
 
-  public onDeleteImage(imageId: string = ""): void {
-    this.imageService.deleteImage(imageId).subscribe(
+  public onDeleteImage(imageId: string = "", ownerId: string = ""): void {
+    this.imageService.deleteImage(imageId, ownerId).subscribe(
       (response: void) => {
         console.log(response);
         this.getImages();
@@ -50,7 +50,11 @@ export class AppComponent implements OnInit{
   public uploadImage(): void {
     // TODO: get the owner ID
     console.log("UploadImage");
-    this.imageService.addImage(this.uploadedFile, "14")
+    this.imageService.addImage(this.uploadedFile, "14").subscribe(
+      (response: void) => {
+        this.getImages();
+      }
+    )
   }
 
   public onFileSelected(event): void {
@@ -72,7 +76,7 @@ export class AppComponent implements OnInit{
       button.setAttribute('data-target', '#updateImageModal');
     }
     if (mode === 'delete') {
-      // this.deleteImage = image;
+      this.deleteImage = image;
       button.setAttribute('data-target', '#deleteImageModal');
     }
     if (container != null) {

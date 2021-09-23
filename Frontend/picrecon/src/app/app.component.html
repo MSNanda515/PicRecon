@@ -6,7 +6,7 @@
   <div class="collapse navbar-collapse" id="navbarColor02">
      <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-           <a class="nav-link" (click)="onOpenModal(null, 'add')">Add Image <span class="sr-only">(current)</span></a>
+           <a class="nav-link" (click)="onOpenModal(null, 'add')" style="cursor: pointer;">Add Image <span class="sr-only">(current)</span></a>
         </li>
      </ul>
      
@@ -29,8 +29,8 @@
                     </div>
                 </div>
                 <img 
-                src = {{image?.imageLoc}}
-                class="img-thumbnail" alt="...">
+                src = {{image?.imageUrl}}
+                class="img-thumbnail" alt="..." style="height: 250px;">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Email : <a href="#">PaulGoyette@gmail.com</a></li>
                     <li class="list-group-item"><i class="fa fa-phone float-right"></i>Phone : 000 123-456</li>
@@ -64,7 +64,7 @@
        </div>
        <div class="modal-body">
           <input type="file" (change)="onFileSelected($event)" />
-          <button type="button" (click)="uploadImage()" class="btn btn-primary">Submit</button>
+          <button type="button" (click)="uploadImage()" class="btn btn-primary" data-dismiss="modal">Submit</button>
        </div>
     </div>
   </div>
@@ -101,7 +101,7 @@
           <p>Are you sure you want to delete image?</p>
            <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-              <button (click)="onDeleteImage(deleteImage?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+              <button (click)="onDeleteImage(deleteImage?.id, deleteImage?.ownerId)" class="btn btn-danger" data-dismiss="modal">Yes</button>
            </div>
         </div>
     </div>
