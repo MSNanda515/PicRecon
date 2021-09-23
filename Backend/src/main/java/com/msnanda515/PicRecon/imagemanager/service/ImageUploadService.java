@@ -33,7 +33,8 @@ public class ImageUploadService {
         Image im = new Image(ownerId);
         // Changes the current object with the id
         imageRepo.insert(im);
-        im.setImageLoc(localPath + im.getId());
+        // Construct the url for the frontend
+        im.setImageLoc(Constants.serverUrl + Constants.apiEndpoint + "image?imageId=" + im.getId());
         imageRepo.save(im);
         // Save the image to the local file
         fileUploadService.uploadToLocal(file, im.getId());
