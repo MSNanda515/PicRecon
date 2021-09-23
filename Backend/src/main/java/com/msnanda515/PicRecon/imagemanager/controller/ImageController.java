@@ -1,6 +1,7 @@
 package com.msnanda515.PicRecon.imagemanager.controller;
 
 import com.msnanda515.PicRecon.imagemanager.model.Image;
+import com.msnanda515.PicRecon.imagemanager.service.FileReadService;
 import com.msnanda515.PicRecon.imagemanager.service.ImageDeleteService;
 import com.msnanda515.PicRecon.imagemanager.service.ImageReadService;
 import com.msnanda515.PicRecon.imagemanager.service.ImageUploadService;
@@ -30,14 +31,17 @@ public class ImageController {
     private ImageUploadService imageUploadService;
     private ImageDeleteService imageDeleteService;
     private ImageReadService imageReadService;
+    private FileReadService fileReadService;
 
     @Autowired
     ImageController(ImageUploadService imageUploadService,
                     ImageDeleteService imageDeleteService,
-                    ImageReadService imageReadService) {
+                    ImageReadService imageReadService,
+                    FileReadService fileReadService) {
         this.imageUploadService = imageUploadService;
         this.imageDeleteService = imageDeleteService;
         this.imageReadService = imageReadService;
+        this.fileReadService = fileReadService;
     }
 
     @GetMapping("/get/local/image")
@@ -90,10 +94,7 @@ public class ImageController {
     }
 
     @GetMapping(value="/image", produces=MediaType.IMAGE_JPEG_VALUE)
-    public @ResponseBody byte[] getImageWithMediaType() throws IOException {
-//        InputStream in = getClass()
-//                .getResourceAsStream("/Users/mehar/Downloads/Tree.jpg");
-        Path path = Paths.get("/Users/mehar/Downloads/Tree.jpg");
-        return Files.readAllBytes(path);
+    public @ResponseBody byte[] getImageWithMediaType(@RequestParam("imageId") String imageId) throws IOException {
+        return fileReadService.getImage(imageId);
     }
 }
