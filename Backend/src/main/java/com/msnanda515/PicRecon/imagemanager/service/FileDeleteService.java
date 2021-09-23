@@ -9,7 +9,6 @@ import java.nio.file.Paths;
 
 @Service
 public class FileDeleteService {
-    private String deleteFolderPath = Constants.localPath;
 
     public void deleteFromLocal(String fileLoc) {
         try {

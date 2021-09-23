@@ -5,12 +5,23 @@ import com.msnanda515.PicRecon.imagemanager.service.ImageDeleteService;
 import com.msnanda515.PicRecon.imagemanager.service.ImageReadService;
 import com.msnanda515.PicRecon.imagemanager.service.ImageUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.zip.ZipException;
+
+import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
+
 
 @RestController
 @RequestMapping("api/v1")
@@ -60,5 +71,29 @@ public class ImageController {
     public void deleteLocal(@RequestParam("imageId") String imageId, @RequestParam("ownerId") String ownerId) {
         // Delete the image from the database if the image belongs to the owner
         imageDeleteService.deleteImage(imageId, ownerId);
+    }
+
+    @GetMapping("/download")
+    public ResponseEntity<Resource> downloadFiles(@RequestParam("filepath") String filepath,
+                                                  @RequestParam("imageId") String imageId) throws IOException {
+        Path filePath = Paths.get(filepath);
+        if(!Files.exists(filePath)) {
+            throw new FileNotFoundException(imageId + " was not found on the server");
+        }
+        Resource resource = new UrlResource(filePath.toUri());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("File-Name", imageId);
+        httpHeaders.add(CONTENT_DISPOSITION, "attachment;File-Name=" + resource.getFilename());
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .headers(httpHeaders).body(resource);
+    }
+
+    @GetMapping(value="/image", produces=MediaType.IMAGE_JPEG_VALUE)
+    public @ResponseBody byte[] getImageWithMediaType() throws IOException {
+//        InputStream in = getClass()
+//                .getResourceAsStream("/Users/mehar/Downloads/Tree.jpg");
+        Path path = Paths.get("/Users/mehar/Downloads/Tree.jpg");
+        return Files.readAllBytes(path);
     }
 }
