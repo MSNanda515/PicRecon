@@ -11,10 +11,11 @@ import { ImageService } from './image.service';
 export class AppComponent implements OnInit{
   // title = 'picrecon';
   public images: Image[] = [];
-  public editImage: Image | null;
+  public editImage: Image;
+  public deleteImage: Image;
+  public uploadedFile: File;
 
   constructor(private imageService: ImageService){ 
-    this.editImage = null;
   }
 
   ngOnInit() {
@@ -32,6 +33,28 @@ export class AppComponent implements OnInit{
         alert(error.message); 
       }
     )
+  }
+
+  public onDeleteImage(imageId: string = ""): void {
+    this.imageService.deleteImage(imageId).subscribe(
+      (response: void) => {
+        console.log(response);
+        this.getImages();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public uploadImage(): void {
+    // TODO: get the owner ID
+    console.log("UploadImage");
+    this.imageService.addImage(this.uploadedFile, "14")
+  }
+
+  public onFileSelected(event): void {
+    this.uploadedFile = event.target.files[0];
   }
 
   public onOpenModal(image: Image | null, mode: string): void {
