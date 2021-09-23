@@ -50,8 +50,8 @@ public class ImageController {
     }
 
     @PostMapping("/upload/local")
-    public void uploadLocal(@RequestParam("file")MultipartFile multipartFile,
-                            @RequestParam("ownerId") String ownerId) throws IOException, ZipException {
+    public void uploadLocal(@RequestParam("ownerId") String ownerId,
+                            @RequestParam(value="imageFile", required = false)MultipartFile multipartFile) throws IOException, ZipException {
         // Call the service to upload file
         imageUploadService.uploadImage(multipartFile, ownerId);
     }
