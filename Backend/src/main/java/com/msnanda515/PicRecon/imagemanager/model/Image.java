@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.GeneratedValue;
+import java.util.ArrayList;
 
 public class Image {
     @Id
@@ -14,6 +15,15 @@ public class Image {
     private String ownerId;
     private String imageLoc;
     private String imageUrl;
+    private ArrayList<String> labels;
+
+    public ArrayList<String> getLabels() {
+        return labels;
+    }
+
+    public void setLabels(ArrayList<String> labels) {
+        this.labels = labels;
+    }
 
     public String getImageUrl() {
         return imageUrl;

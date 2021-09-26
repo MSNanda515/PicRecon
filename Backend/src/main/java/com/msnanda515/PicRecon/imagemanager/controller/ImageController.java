@@ -99,9 +99,4 @@ public class ImageController {
     public @ResponseBody byte[] getImageWithMediaType(@RequestParam("imageId") String imageId) throws IOException {
         return fileReadService.getImage(imageId);
     }
-
-    @GetMapping("/imagelabel")
-    public ArrayList<String> getImageLabels() {
-        return imageAnalysisService.imageLabels("http://localhost:8080/api/v1/image?imageId=614ce66dc2f072672690e3fe");
-    }
 }

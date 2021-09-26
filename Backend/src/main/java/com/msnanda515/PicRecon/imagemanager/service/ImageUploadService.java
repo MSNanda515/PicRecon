@@ -17,6 +17,7 @@ import java.util.Optional;
 public class ImageUploadService {
 
     private FileUploadService fileUploadService;
+    private ImageAnalysisService imageAnalysisService;
 
     private final ImageRepo imageRepo;
 
@@ -24,12 +25,15 @@ public class ImageUploadService {
     private String localPath = Constants.localPath;
 
     @Autowired
-    ImageUploadService(ImageRepo imageRepo, FileUploadService fileUploadService) {
+    ImageUploadService(ImageRepo imageRepo, FileUploadService fileUploadService,
+                       ImageAnalysisService imageAnalysisService) {
         this.imageRepo = imageRepo;
         this.fileUploadService = fileUploadService;
+        this.imageAnalysisService = imageAnalysisService;
     }
 
     public void uploadImage(MultipartFile file, String ownerId) {
+        // TODO: Use multithreading to access mongodb server and cloud vision api
         // Create an image object and save it to the database
         Image im = new Image(ownerId);
         // Changes the current object with the id
@@ -37,9 +41,13 @@ public class ImageUploadService {
         // Construct the url for the frontend
         im.setImageLoc(Constants.localPath + im.getId());
         im.setImageUrl(Constants.serverUrl + Constants.apiEndpoint + "image?imageId=" + im.getId());
-        imageRepo.save(im);
         // Save the image to the local file
         fileUploadService.uploadToLocal(file, im.getId());
 
+        // Get labels for the image
+        im.setLabels(imageAnalysisService.imageLabels(im.getImageUrl()));
+
+        // Save the object to database
+        imageRepo.save(im);
     }
 }
