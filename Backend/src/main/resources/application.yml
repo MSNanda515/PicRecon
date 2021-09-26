@@ -1,2 +1,39 @@
 spring.data.mongodb.uri: mongodb+srv://Redcap:DevRedcap@cluster0.9pqpb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 spring.data.mongodb.database: picrecon
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  datasource:
+    password: devwork
+    url: jdbc:postgresql://localhost:5432/picrecon
+    username: msnanda
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+
+  mail:
+    host: localhost
+    port: 1025
+    username: hello
+    password: hello
+
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
