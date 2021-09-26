@@ -1,10 +1,7 @@
 package com.msnanda515.PicRecon.imagemanager.controller;
 
 import com.msnanda515.PicRecon.imagemanager.model.Image;
-import com.msnanda515.PicRecon.imagemanager.service.FileReadService;
-import com.msnanda515.PicRecon.imagemanager.service.ImageDeleteService;
-import com.msnanda515.PicRecon.imagemanager.service.ImageReadService;
-import com.msnanda515.PicRecon.imagemanager.service.ImageUploadService;
+import com.msnanda515.PicRecon.imagemanager.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -18,7 +15,9 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipException;
 
 import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
@@ -32,16 +31,19 @@ public class ImageController {
     private ImageDeleteService imageDeleteService;
     private ImageReadService imageReadService;
     private FileReadService fileReadService;
+    private ImageAnalysisService imageAnalysisService;
 
     @Autowired
     ImageController(ImageUploadService imageUploadService,
                     ImageDeleteService imageDeleteService,
                     ImageReadService imageReadService,
-                    FileReadService fileReadService) {
+                    FileReadService fileReadService,
+                    ImageAnalysisService imageAnalysisService) {
         this.imageUploadService = imageUploadService;
         this.imageDeleteService = imageDeleteService;
         this.imageReadService = imageReadService;
         this.fileReadService = fileReadService;
+        this.imageAnalysisService = imageAnalysisService;
     }
 
     @GetMapping("/get/local/image")
@@ -96,5 +98,10 @@ public class ImageController {
     @GetMapping(value="/image", produces=MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] getImageWithMediaType(@RequestParam("imageId") String imageId) throws IOException {
         return fileReadService.getImage(imageId);
+    }
+
+    @GetMapping("/imagelabel")
+    public ArrayList<String> getImageLabels() {
+        return imageAnalysisService.imageLabels("http://localhost:8080/api/v1/image?imageId=614ce66dc2f072672690e3fe");
     }
 }
