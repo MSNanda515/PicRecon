@@ -1,6 +1,7 @@
 package com.msnanda515.PicRecon.usermanager.registration;
 
 import com.msnanda515.PicRecon.usermanager.appuser.AppUser;
+import com.msnanda515.PicRecon.usermanager.appuser.AppUserRole;
 import com.msnanda515.PicRecon.usermanager.appuser.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,13 @@ public class RegistrationService {
 
 
         return appUserService.signUpUser(
-                new AppUser()
+                new AppUser(
+                        request.getFirstName(),
+                        request.getLastName(),
+                        request.getEmail(),
+                        request.getPassword(),
+                        AppUserRole.USER
+                )
         );
     }
 }
